@@ -7,8 +7,13 @@
   SECRETS_SCAN_ENABLED = "false"
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  from = "/api/chatkit/session"
+  to = "/.netlify/functions/chatkit-session"
+  status = 200
+
+[[redirects]]
+  from = "/api/upload"
+  to = "/.netlify/functions/upload"
   status = 200
 
 [[headers]]
