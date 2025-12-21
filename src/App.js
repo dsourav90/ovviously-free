@@ -5,16 +5,6 @@ import { ChatKit, useChatKit } from '@openai/chatkit-react';
 function App() {
   const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
   
-  // Use consistent device ID for conversation history
-  const getDeviceId = () => {
-    let deviceId = localStorage.getItem('chatkit_device_id');
-    if (!deviceId) {
-      deviceId = `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      localStorage.setItem('chatkit_device_id', deviceId);
-    }
-    return deviceId;
-  };
-  
   const { control } = useChatKit({
     api: {
       async getClientSecret(existing) {
@@ -29,7 +19,7 @@ function App() {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              deviceId: getDeviceId()
+              deviceId: localStorage.getItem('deviceId') || `user-${Date.now()}`
             })
           });
 
