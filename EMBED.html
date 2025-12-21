@@ -1,0 +1,61 @@
+<!-- AI Chatbase Embed - Standard Size -->
+<iframe 
+  src="https://aichatbase.netlify.app" 
+  width="400" 
+  height="600"
+  frameborder="0"
+  allow="microphone; camera"
+  style="border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+></iframe>
+
+<!-- AI Chatbase Embed - Full Screen -->
+<iframe 
+  src="https://aichatbase.netlify.app?iframe=true" 
+  width="100%" 
+  height="100vh"
+  frameborder="0"
+  allow="microphone; camera"
+  style="border: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;"
+></iframe>
+
+<!-- AI Chatbase Embed - Medium Widget -->
+<iframe 
+  src="https://aichatbase.netlify.app" 
+  width="350" 
+  height="500"
+  frameborder="0"
+  allow="microphone; camera"
+  style="border: none; border-radius: 8px;"
+></iframe>
+
+<!-- AI Chatbase Embed - Chat Bubble (Bottom Right) -->
+<style>
+  .chatbase-bubble {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 380px;
+    height: 600px;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    z-index: 9999;
+  }
+  
+  @media (max-width: 768px) {
+    .chatbase-bubble {
+      width: 100%;
+      height: 100%;
+      bottom: 0;
+      right: 0;
+      border-radius: 0;
+    }
+  }
+</style>
+
+<iframe 
+  src="https://aichatbase.netlify.app" 
+  class="chatbase-bubble"
+  frameborder="0"
+  allow="microphone; camera"
+></iframe>
