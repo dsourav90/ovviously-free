@@ -40,7 +40,7 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Create ChatKit session with metadata for history
+    // Create ChatKit session
     const response = await fetch('https://api.openai.com/v1/chatkit/sessions', {
       method: 'POST',
       headers: {
@@ -50,11 +50,7 @@ exports.handler = async (event, context) => {
       },
       body: JSON.stringify({
         workflow: { id: workflowId },
-        user: deviceId || `user-${Date.now()}`,
-        metadata: {
-          created_at: new Date().toISOString(),
-          domain: 'aichatbase.netlify.app'
-        }
+        user: deviceId || `user-${Date.now()}`
       }),
     });
 
