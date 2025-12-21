@@ -1,0 +1,86 @@
+$bg-gradient: linear-gradient(135deg, 
+  rgba(255, 192, 203, 0.1) 0%,
+  rgba(173, 216, 230, 0.1) 25%,
+  rgba(255, 255, 224, 0.1) 50%,
+  rgba(221, 160, 221, 0.1) 75%,
+  rgba(144, 238, 144, 0.1) 100%
+);
+$text-color: #1a1a1a;
+$placeholder-color: #999;
+$action-button-color: #666;
+$button-hover-bg: rgba(0, 0, 0, 0.05);
+$transition-speed: 0.2s;
+
+.chat-input-form {
+  width: 100%;
+}
+
+.chat-input-container {
+  position: relative;
+  background: $bg-gradient;
+  border-radius: 24px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  transition: box-shadow $transition-speed;
+
+  &:focus-within {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.chat-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  color: $text-color;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.5;
+  max-height: 200px;
+  overflow-y: auto;
+
+  &::placeholder {
+    color: $placeholder-color;
+  }
+}
+
+.chat-input-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-action-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  cursor: pointer;
+  color: $action-button-color;
+  transition: all $transition-speed;
+
+  &:hover:not(:disabled) {
+    background-color: $button-hover-bg;
+    color: $text-color;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.send-button {
+  &:not(:disabled) {
+    color: $text-color;
+  }
+}

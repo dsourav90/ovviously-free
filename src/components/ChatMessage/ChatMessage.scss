@@ -1,0 +1,62 @@
+$user-bg: #1a1a1a;
+$user-text: #ffffff;
+$assistant-bg: #f5f5f5;
+$assistant-text: #1a1a1a;
+
+.chat-message {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  animation: fadeIn 0.3s ease-in;
+
+  &.user {
+    flex-direction: row-reverse;
+
+    .message-content {
+      align-items: flex-end;
+    }
+
+    .message-text {
+      background: $user-bg;
+      color: $user-text;
+    }
+  }
+
+  &.assistant {
+    .message-text {
+      background: $assistant-bg;
+      color: $assistant-text;
+    }
+  }
+
+  .message-avatar {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .message-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+  }
+
+  .message-text {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
