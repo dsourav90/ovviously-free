@@ -25,8 +25,8 @@ git push -u origin main
 In Netlify dashboard → Site settings → Environment variables:
 
 ```
-REACT_APP_OPENAI_API_KEY=sk-proj-YOUR_KEY
-REACT_APP_CHATKIT_WORKFLOW_ID=wf_692489daa23c81909b5e4aef1a64af670b661c9cb4abf8f4
+REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
+REACT_APP_CHATKIT_WORKFLOW_ID=your_workflow_id_here
 ```
 
 ### 4. Redeploy
