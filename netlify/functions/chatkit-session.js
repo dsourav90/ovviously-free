@@ -72,7 +72,11 @@ exports.handler = async (event, context) => {
       systemInstructions = buildLegalSystemInstructions(contractType);
     }
 
-    // Create ChatKit session with legal context
+    // Note: ChatKit sessions don't accept instructions parameter
+    // Legal context should be provided through the workflow or in messages
+    // For now, we'll create a basic session and handle context in the workflow
+
+    // Create ChatKit session
     const response = await fetch('https://api.openai.com/v1/chatkit/sessions', {
       method: 'POST',
       headers: {
@@ -87,8 +91,7 @@ exports.handler = async (event, context) => {
           file_upload: {
             enabled: true
           }
-        },
-        instructions: systemInstructions
+        }
       }),
     });
 
