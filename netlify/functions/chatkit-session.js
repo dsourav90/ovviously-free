@@ -51,7 +51,11 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         workflow: { id: workflowId },
         user: deviceId || `user-${Date.now()}`,
-        file_upload_enabled: true
+        chatkit_configuration: {
+          file_upload: {
+            enabled: true
+          }
+        }
       }),
     });
 
