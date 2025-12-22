@@ -32,14 +32,7 @@ exports.handler = async (event, context) => {
         neonConfig.fetchConnectionCache = true;
         const pool = new Pool({ connectionString: process.env.DATABASE_URL });
         const adapter = new PrismaNeon(pool);
-        const prisma = new PrismaClient({ 
-          adapter,
-          datasources: {
-            db: {
-              url: process.env.DATABASE_URL
-            }
-          }
-        });
+        const prisma = new PrismaClient({ adapter });
         clientCreated = true;
 
         // Test 4: Try an actual query
