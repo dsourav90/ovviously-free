@@ -122,9 +122,3 @@ export const useSavedDocuments = () => {
     loadDocuments,
   };
 };
-    updateDocument,
-    deleteDocument,
-    getDocument,
-    clearAllDocuments,
-  };
-};
