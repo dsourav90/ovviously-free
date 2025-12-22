@@ -25,8 +25,7 @@ function App() {
     handlePasteText,
     handleFileUpload,
     clearDocument,
-    loadDocument,
-    getCurrentDocument
+    loadDocument
   } = useDocument();
 
   const {

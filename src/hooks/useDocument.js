@@ -127,7 +127,7 @@ export const useDocument = () => {
       setIsUploading(false);
       return { success: false, error: err.message };
     }
-  }, []);
+  }, [documentTitle, language, taskType]);
 
   // Clear document
   const clearDocument = useCallback(() => {
