@@ -1,13 +1,17 @@
 const { PrismaClient } = require('@prisma/client');
+const { neonConfig } = require('@neondatabase/serverless');
+const { PrismaNeon } = require('@prisma/adapter-neon');
+const { Pool } = require('@neondatabase/serverless');
 
-// Initialize Prisma Client with database URL from environment
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL
-    }
-  }
-});
+// Configure Neon for serverless
+neonConfig.fetchConnectionCache = true;
+
+// Create connection pool
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaNeon(pool);
+
+// Initialize Prisma Client with Neon adapter
+const prisma = new PrismaClient({ adapter });
 
 exports.handler = async (event, context) => {
   const headers = {
