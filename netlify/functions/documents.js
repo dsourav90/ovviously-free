@@ -1,6 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const { neonConfig, neon } = require('@neondatabase/serverless');
-const { PrismaNeon } = require('@prisma/adapter-neon');
+const { PrismaNeonHttp } = require('@prisma/adapter-neon');
 
 // Configure Neon for serverless environment
 neonConfig.fetchConnectionCache = true;
@@ -22,7 +22,7 @@ function getPrismaClient() {
 
   // Use neon HTTP function instead of Pool for better serverless compatibility
   const sql = neon(databaseUrl);
-  const adapter = new PrismaNeon(sql);
+  const adapter = new PrismaNeonHttp(sql);
 
   // Initialize Prisma Client with the adapter
   prisma = new PrismaClient({ adapter });
