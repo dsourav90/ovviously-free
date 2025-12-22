@@ -16,7 +16,8 @@ const DocumentEditor = ({
   onTextChange,
   wordCount,
   onPasteText,
-  onFileUpload
+  onFileUpload,
+  isUploading
 }) => {
   return (
     <div className="document-editor">
@@ -31,6 +32,7 @@ const DocumentEditor = ({
       <DocumentUpload
         onPasteText={onPasteText}
         onFileUpload={onFileUpload}
+        isUploading={isUploading}
       />
       <DocumentTextArea
         value={text}

@@ -13,6 +13,7 @@ function App() {
     language,
     taskType,
     wordCount,
+    isUploading,
     setDocumentText,
     setDocumentTitle,
     setLanguage,
@@ -40,6 +41,7 @@ function App() {
             wordCount={wordCount}
             onPasteText={handlePasteText}
             onFileUpload={handleFileUpload}
+            isUploading={isUploading}
           />
         }
         rightPanel={

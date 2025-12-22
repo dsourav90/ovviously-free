@@ -1,4 +1,9 @@
 import { useState, useCallback } from 'react';
+import mammoth from 'mammoth';
+import * as pdfjsLib from 'pdfjs-dist';
+
+// Configure PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 /**
  * Custom hook for managing document state and operations
@@ -9,6 +14,7 @@ export const useDocument = () => {
   const [documentTitle, setDocumentTitle] = useState('');
   const [language, setLanguage] = useState('English (US)');
   const [taskType, setTaskType] = useState('Enter writing task');
+  const [isUploading, setIsUploading] = useState(false);
 
   // Calculate word count - strips HTML tags for accurate count
   const stripHtml = (html) => {
@@ -33,28 +39,81 @@ export const useDocument = () => {
     }
   }, []);
 
-  // Handle file upload
-  const handleFileUpload = useCallback((file) => {
+  // Parse PDF file
+  const parsePDF = async (file) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = '';
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map(item => item.str).join(' ');
+      fullText += pageText + '\n\n';
+    }
+
+    return fullText;
+  };
+
+  // Parse DOCX file
+  const parseDOCX = async (file) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await mammoth.convertToHtml({ arrayBuffer });
+    return result.value; // Returns HTML
+  };
+
+  // Parse TXT file
+  const parseTXT = (file) => {
     return new Promise((resolve, reject) => {
-      if (!file) {
-        reject(new Error('No file provided'));
-        return;
-      }
-
       const reader = new FileReader();
-      
-      reader.onload = (e) => {
-        const text = e.target.result;
-        setDocumentText(text);
-        resolve({ success: true, text });
-      };
-
-      reader.onerror = (e) => {
-        reject(new Error('Failed to read file'));
-      };
-
+      reader.onload = (e) => resolve(e.target.result);
+      reader.onerror = () => reject(new Error('Failed to read text file'));
       reader.readAsText(file);
     });
+  };
+
+  // Handle file upload with document parsing
+  const handleFileUpload = useCallback(async (file) => {
+    if (!file) {
+      return { success: false, error: 'No file provided' };
+    }
+
+    setIsUploading(true);
+
+    try {
+      let content = '';
+      const fileName = file.name.toLowerCase();
+
+      // Set document title from filename
+      setDocumentTitle(file.name.replace(/\.[^/.]+$/, ''));
+
+      // Parse based on file type
+      if (fileName.endsWith('.pdf')) {
+        content = await parsePDF(file);
+        // Convert plain text to HTML for TinyMCE
+        content = `<p>${content.split('\n').filter(line => line.trim()).join('</p><p>')}</p>`;
+      } else if (fileName.endsWith('.docx')) {
+        content = await parseDOCX(file);
+      } else if (fileName.endsWith('.txt')) {
+        const text = await parseTXT(file);
+        // Convert plain text to HTML
+        content = `<p>${text.split('\n').filter(line => line.trim()).join('</p><p>')}</p>`;
+      } else if (fileName.endsWith('.doc')) {
+        // For .doc files, try to read as text (limited support)
+        const text = await parseTXT(file);
+        content = `<p>${text.split('\n').filter(line => line.trim()).join('</p><p>')}</p>`;
+      } else {
+        throw new Error('Unsupported file type. Please upload PDF, DOCX, DOC, or TXT files.');
+      }
+
+      setDocumentText(content);
+      setIsUploading(false);
+      return { success: true, content };
+    } catch (err) {
+      console.error('Failed to parse document:', err);
+      setIsUploading(false);
+      return { success: false, error: err.message };
+    }
   }, []);
 
   // Clear document
@@ -75,6 +134,7 @@ export const useDocument = () => {
     language,
     taskType,
     wordCount,
+    isUploading,
     
     // Setters
     setDocumentText: updateText,
