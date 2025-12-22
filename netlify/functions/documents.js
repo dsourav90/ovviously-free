@@ -1,6 +1,13 @@
 const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient();
+// Initialize Prisma Client with database URL from environment
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL
+    }
+  }
+});
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -14,10 +21,14 @@ exports.handler = async (event, context) => {
     return { statusCode: 200, headers, body: '' };
   }
 
+  console.log('Request:', event.httpMethod, event.path);
+  console.log('Query params:', event.queryStringParameters);
+
   try {
     const { deviceId } = event.queryStringParameters || {};
     
     if (!deviceId) {
+      console.error('No deviceId provided');
       return {
         statusCode: 400,
         headers,
@@ -25,15 +36,21 @@ exports.handler = async (event, context) => {
       };
     }
 
+    console.log('Looking for user with deviceId:', deviceId);
+
     // Get or create user
     let user = await prisma.user.findUnique({
       where: { deviceId }
     });
 
     if (!user) {
+      console.log('User not found, creating new user');
       user = await prisma.user.create({
         data: { deviceId }
       });
+      console.log('Created user:', user.id);
+    } else {
+      console.log('Found user:', user.id);
     }
 
     switch (event.httpMethod) {
@@ -52,12 +69,14 @@ exports.handler = async (event, context) => {
       case 'POST':
         // Create new document
         const createData = JSON.parse(event.body);
+        console.log('Creating document:', createData);
         const newDocument = await prisma.document.create({
           data: {
             ...createData,
             userId: user.id
           }
         });
+        console.log('Document created:', newDocument.id);
         return {
           statusCode: 201,
           headers,
