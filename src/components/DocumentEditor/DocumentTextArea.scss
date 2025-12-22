@@ -7,6 +7,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-height: 0; // Important for flex children with height: 100%
 
   // TinyMCE container styling
   :global {
@@ -14,6 +15,7 @@
       border: none !important;
       border-radius: $radius-lg;
       height: 100% !important;
+      min-height: 400px; // Ensure minimum visible height
     }
 
     .tox-editor-header {
