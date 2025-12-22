@@ -25,6 +25,7 @@ const DocumentTextArea = ({ value, onChange, placeholder = "Start typing or past
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
+          toolbar_location: 'bottom',
           content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif; font-size: 15px; line-height: 1.6; }',
           placeholder: placeholder,
           skin: 'oxide',
