@@ -25,7 +25,8 @@ function App() {
     handlePasteText,
     handleFileUpload,
     clearDocument,
-    loadDocument
+    loadDocument,
+    currentDocumentId
   } = useDocument();
 
   const {
@@ -59,6 +60,10 @@ function App() {
 
   // Handle deleting a document
   const handleDeleteDocument = (docId) => {
+    // If deleting the currently open document, clear the editor
+    if (docId === currentDocumentId) {
+      clearDocument();
+    }
     deleteDocument(docId);
   };
 
