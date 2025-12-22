@@ -30,16 +30,29 @@ exports.handler = async (event, context) => {
       // Test 3: Try to create client
       if (hasDbUrl) {
         neonConfig.fetchConnectionCache = true;
-        const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+        
+        // Log the connection string format
+        const connStr = process.env.DATABASE_URL;
+        console.log('Connection string starts with:', connStr.substring(0, 20));
+        console.log('Connection string length:', connStr.length);
+        
+        const pool = new Pool({ connectionString: connStr });
         const adapter = new PrismaNeon(pool);
+        
+        // Check pool configuration
+        console.log('Pool created with connection string');
+        
         const prisma = new PrismaClient({ adapter });
         clientCreated = true;
 
         // Test 4: Try an actual query
         try {
+          console.log('Attempting user count query...');
           const userCount = await prisma.user.count();
+          console.log('Query succeeded! User count:', userCount);
           querySuccess = true;
         } catch (qe) {
+          console.error('Query failed:', qe);
           queryError = qe.message;
         }
       }
