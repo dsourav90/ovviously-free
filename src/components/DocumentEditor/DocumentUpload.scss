@@ -1,0 +1,26 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.document-upload {
+  padding: $spacing-2xl $spacing-xl;
+  text-align: center;
+  border-bottom: 1px solid $color-border;
+
+  &__prompt {
+    font-size: $font-md;
+    color: $color-text-secondary;
+    margin-bottom: $spacing-md;
+  }
+
+  &__buttons {
+    @include flex-center;
+    gap: $spacing-sm;
+  }
+
+  &__btn {
+    @include button-outline;
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+}

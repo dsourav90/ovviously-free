@@ -1,0 +1,122 @@
+@import './variables';
+
+// Flexbox Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Button Mixin
+@mixin button-base {
+  padding: $spacing-xs $spacing-lg;
+  border-radius: $radius-lg;
+  font-size: $font-md;
+  font-weight: $font-medium;
+  cursor: pointer;
+  transition: all $transition-fast;
+  outline: none;
+  border: none;
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $color-primary;
+  color: $color-bg-white;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-outline {
+  @include button-base;
+  background: transparent;
+  color: $color-primary;
+  border: 1px solid $color-primary;
+
+  &:hover:not(:disabled) {
+    background: $color-primary;
+    color: $color-bg-white;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Input Mixin
+@mixin input-base {
+  padding: $spacing-xs $spacing-sm;
+  border: 1px solid $color-border-light;
+  border-radius: $radius-md;
+  font-size: $font-sm;
+  outline: none;
+  transition: border-color $transition-fast;
+
+  &:hover {
+    border-color: $color-text-secondary;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+// Text Truncate
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Scrollbar Styling
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-bg-light;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: $radius-sm;
+
+    &:hover {
+      background: $color-text-tertiary;
+    }
+  }
+}
+
+// Responsive Breakpoints
+@mixin tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}

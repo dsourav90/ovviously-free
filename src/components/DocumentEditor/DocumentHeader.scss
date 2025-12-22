@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.document-header {
+  @include flex-between;
+  padding: $spacing-md $spacing-xl;
+  border-bottom: 1px solid $color-border;
+  background: $color-bg-light;
+
+  &__title {
+    border: none;
+    outline: none;
+    font-size: $font-lg;
+    font-weight: $font-medium;
+    background: transparent;
+    color: $color-text-primary;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
+    
+    &:hover {
+      background: $color-bg-hover;
+    }
+    
+    &:focus {
+      background: $color-bg-white;
+      border: 1px solid $color-border-light;
+    }
+
+    &::placeholder {
+      color: $color-text-tertiary;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    gap: $spacing-sm;
+  }
+
+  &__select {
+    @include input-base;
+    background: $color-bg-white;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,10 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.document-editor {
+  @include flex-column;
+  width: 100%;
+  height: 100%;
+  background: $color-bg-white;
+  border-right: 1px solid $color-border;
+}

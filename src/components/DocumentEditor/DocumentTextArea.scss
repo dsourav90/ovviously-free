@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.document-textarea {
+  flex: 1;
+  padding: $spacing-xl;
+  overflow-y: auto;
+  @include custom-scrollbar;
+
+  &__input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: $font-base;
+    line-height: $line-height-base;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    resize: none;
+    color: $color-text-primary;
+
+    &::placeholder {
+      color: $color-text-tertiary;
+    }
+  }
+}
