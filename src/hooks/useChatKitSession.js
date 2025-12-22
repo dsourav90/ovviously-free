@@ -29,7 +29,12 @@ export const useChatKitSession = () => {
     }
     
     try {
-      const response = await fetch(`${backendUrl}/api/chatkit/session`, {
+      // Use Netlify function URL
+      const url = backendUrl 
+        ? `${backendUrl}/api/chatkit/session`
+        : '/.netlify/functions/chatkit-session';
+      
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
