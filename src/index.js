@@ -7,9 +7,12 @@ import ChatOnly from './ChatOnly';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // Check if we're in chat-only mode (for iframe embedding)
-const isChatOnly = window.location.pathname === '/chat' || 
-                   window.location.search.includes('chat-only=true') ||
-                   window.CHAT_ONLY_MODE;
+// Using URLSearchParams to properly parse query parameters
+const urlParams = new URLSearchParams(window.location.search);
+const isChatOnly = urlParams.get('view') === 'chat';
+
+console.log('URL:', window.location.href);
+console.log('isChatOnly:', isChatOnly);
 
 root.render(
   <React.StrictMode>
