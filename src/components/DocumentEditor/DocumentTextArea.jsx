@@ -8,7 +8,7 @@ const DocumentTextArea = ({ value, onChange, placeholder = "Start typing or past
   return (
     <div className="document-textarea">
       <Editor
-        apiKey="no-api-key" // Using TinyMCE without cloud - self-hosted
+        apiKey="b9igiwd552nrww5fzyiqwumfv4fohtrey249ognkros5hpab"
         onInit={(evt, editor) => editorRef.current = editor}
         value={value}
         onEditorChange={onChange}
