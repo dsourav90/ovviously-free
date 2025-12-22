@@ -25,8 +25,15 @@ function getPrismaClient() {
   const pool = new Pool({ connectionString: databaseUrl });
   const adapter = new PrismaNeon(pool);
 
-  // Initialize Prisma Client with Neon adapter
-  prisma = new PrismaClient({ adapter });
+  // Initialize Prisma Client with Neon adapter AND databaseUrl
+  prisma = new PrismaClient({ 
+    adapter,
+    datasources: {
+      db: {
+        url: databaseUrl
+      }
+    }
+  });
   
   return prisma;
 }
