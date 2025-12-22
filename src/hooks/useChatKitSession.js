@@ -34,24 +34,33 @@ export const useChatKitSession = () => {
         ? `${backendUrl}/api/chatkit/session`
         : '/.netlify/functions/chatkit-session';
       
+      const deviceId = getDeviceId();
+      console.log('📡 Requesting ChatKit session for device:', deviceId);
+      
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          deviceId: getDeviceId()
+          deviceId,
+          contractType: null,
+          query: null,
+          useSemanticSearch: false
         })
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('❌ ChatKit session error:', response.status, errorText);
+        throw new Error(`HTTP error! status: ${response.status}, details: ${errorText}`);
       }
 
-      const { client_secret } = await response.json();
-      return client_secret;
+      const data = await response.json();
+      console.log('✅ ChatKit session created successfully');
+      return data.client_secret;
     } catch (error) {
-      console.error('Error fetching client secret:', error);
+      console.error('❌ Error fetching client secret:', error);
       throw error;
     }
   }, [backendUrl, getDeviceId]);

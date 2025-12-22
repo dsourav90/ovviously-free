@@ -29,11 +29,28 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { deviceId, contractType, query, useSemanticSearch = false } = JSON.parse(event.body);
+    // Parse request body
+    let requestBody;
+    try {
+      requestBody = JSON.parse(event.body || '{}');
+    } catch (parseError) {
+      console.error('❌ JSON parse error:', parseError);
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'Invalid JSON in request body' })
+      };
+    }
+
+    const { deviceId, contractType, query, useSemanticSearch = false } = requestBody;
+    
+    console.log('📥 ChatKit session request:', { deviceId, contractType, useSemanticSearch });
+
     const workflowId = process.env.REACT_APP_CHATKIT_WORKFLOW_ID;
     const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
     if (!workflowId || !apiKey) {
+      console.error('❌ Missing environment variables');
       return {
         statusCode: 500,
         headers,
