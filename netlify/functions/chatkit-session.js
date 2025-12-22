@@ -51,30 +51,21 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         workflow: { id: workflowId },
         user: deviceId || `user-${Date.now()}`,
-        file_upload: {
-          enabled: true,
-          max_file_size: 10485760, // 10MB
-          allowed_mime_types: [
-            'application/pdf',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            'application/msword',
-            'text/plain',
-            'image/jpeg',
-            'image/png',
-            'image/gif',
-            'image/webp'
-          ]
-        }
+        file_upload_enabled: true
       }),
     });
 
     if (!response.ok) {
       const error = await response.text();
-      console.error('OpenAI API error:', error);
+      console.error('OpenAI API error:', response.status, error);
       return {
         statusCode: response.status,
         headers,
-        body: JSON.stringify({ error: 'Failed to create ChatKit session', details: error })
+        body: JSON.stringify({ 
+          error: 'Failed to create ChatKit session', 
+          details: error,
+          status: response.status 
+        })
       };
     }
 
