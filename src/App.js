@@ -32,7 +32,6 @@ function App() {
   const {
     savedDocuments,
     saveDocument,
-    deleteDocument,
   } = useSavedDocuments();
 
   const { control } = useChatKitSession();
