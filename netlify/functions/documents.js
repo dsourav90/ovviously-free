@@ -6,24 +6,35 @@ const { Pool } = require('@neondatabase/serverless');
 // Configure Neon for serverless
 neonConfig.fetchConnectionCache = true;
 
-// Get database URL from environment
-const databaseUrl = process.env.DATABASE_URL;
+// Lazy initialization of Prisma
+let prisma;
 
-if (!databaseUrl) {
-  console.error('DATABASE_URL environment variable is not set');
-  throw new Error('DATABASE_URL environment variable is required');
+function getPrismaClient() {
+  if (prisma) return prisma;
+
+  const databaseUrl = process.env.DATABASE_URL;
+  
+  if (!databaseUrl) {
+    console.error('DATABASE_URL environment variable is not set');
+    throw new Error('DATABASE_URL environment variable is required');
+  }
+
+  console.log('Initializing Prisma with DATABASE_URL');
+
+  // Create connection pool
+  const pool = new Pool({ connectionString: databaseUrl });
+  const adapter = new PrismaNeon(pool);
+
+  // Initialize Prisma Client with Neon adapter
+  prisma = new PrismaClient({ adapter });
+  
+  return prisma;
 }
 
-console.log('Database URL configured:', databaseUrl ? 'Yes' : 'No');
-
-// Create connection pool
-const pool = new Pool({ connectionString: databaseUrl });
-const adapter = new PrismaNeon(pool);
-
-// Initialize Prisma Client with Neon adapter
-const prisma = new PrismaClient({ adapter });
-
 exports.handler = async (event, context) => {
+  // Set callbackWaitsForEmptyEventLoop to false to prevent Lambda from waiting
+  context.callbackWaitsForEmptyEventLoop = false;
+
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -39,6 +50,9 @@ exports.handler = async (event, context) => {
   console.log('Query params:', event.queryStringParameters);
 
   try {
+    // Initialize Prisma client
+    const prisma = getPrismaClient();
+
     const { deviceId } = event.queryStringParameters || {};
     
     if (!deviceId) {
