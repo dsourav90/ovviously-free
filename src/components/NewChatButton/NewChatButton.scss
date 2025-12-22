@@ -1,8 +1,4 @@
-$border-color: #e5e5e5;
-$hover-bg: #f5f5f5;
-$hover-border: #d4d4d4;
-$text-color: #333;
-$transition-speed: 0.2s;
+@import '../../styles/variables';
 
 .new-chat-button {
   display: flex;
@@ -11,16 +7,16 @@ $transition-speed: 0.2s;
   width: 100%;
   padding: 10px 12px;
   background-color: transparent;
-  border: 1px solid $border-color;
-  border-radius: 8px;
+  border: 1px solid $color-border-medium;
+  border-radius: $radius-lg;
   cursor: pointer;
-  font-size: 14px;
-  color: $text-color;
-  transition: all $transition-speed;
+  font-size: $font-md;
+  color: $color-text-dark;
+  transition: all $transition-fast;
 
   &:hover {
-    background-color: $hover-bg;
-    border-color: $hover-border;
+    background-color: $color-bg-gray;
+    border-color: $color-border-dark;
   }
 }
 

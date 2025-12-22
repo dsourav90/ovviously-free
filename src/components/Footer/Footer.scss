@@ -1,5 +1,5 @@
 $bg-color: #ffffff;
-$border-color: #e5e5e5;
+$color-border-medium: #e5e5e5;
 $text-color: #999;
 
 .chat-footer {
@@ -7,7 +7,7 @@ $text-color: #999;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid $border-color;
+  border-top: 1px solid $color-border-medium;
   background-color: $bg-color;
 }
 

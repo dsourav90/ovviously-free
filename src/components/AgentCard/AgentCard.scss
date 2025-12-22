@@ -1,26 +1,21 @@
-$card-bg: #ffffff;
-$border-color: #e5e5e5;
-$active-border: #1a1a1a;
-$text-primary: #1a1a1a;
-$text-secondary: #666;
-$hover-bg: #f9f9f9;
+@import '../../styles/variables';
 
 .agent-card {
-  background: $card-bg;
-  border: 2px solid $border-color;
-  border-radius: 12px;
-  padding: 16px;
+  background: $color-bg-white;
+  border: 2px solid $color-border-medium;
+  border-radius: $radius-xl;
+  padding: $spacing-md;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all $transition-fast;
   position: relative;
 
   &:hover {
-    background: $hover-bg;
-    border-color: lighten($active-border, 40%);
+    background: $color-bg-container;
+    border-color: lighten($color-text-primary, 40%);
   }
 
   &.active {
-    border-color: $active-border;
+    border-color: $color-text-primary;
     background: rgba(26, 26, 26, 0.02);
   }
 
@@ -42,7 +37,7 @@ $hover-bg: #f9f9f9;
       h3 {
         font-size: 16px;
         font-weight: 600;
-        color: $text-primary;
+        color: $color-text-primary;
         margin: 0 0 4px 0;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -64,7 +59,7 @@ $hover-bg: #f9f9f9;
 
       p {
         font-size: 13px;
-        color: $text-secondary;
+        color: $color-text-secondary;
         margin: 0;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -80,7 +75,7 @@ $hover-bg: #f9f9f9;
 
     .meta-item {
       font-size: 11px;
-      color: $text-secondary;
+      color: $color-text-secondary;
       background: rgba(0, 0, 0, 0.05);
       padding: 4px 8px;
       border-radius: 4px;

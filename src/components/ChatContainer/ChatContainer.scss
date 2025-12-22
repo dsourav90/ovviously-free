@@ -1,34 +1,31 @@
-$bg-color: #f9f9f9;
-$title-color: #1a1a1a;
-$max-width: 900px;
-$input-max-width: 800px;
+@import '../../styles/variables';
 
 .chat-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: $bg-color;
+  background-color: $color-bg-container;
   position: relative;
   overflow: hidden;
 }
 
 .chat-header {
-  background: white;
-  border-bottom: 1px solid #e5e5e5;
+  background: $color-bg-white;
+  border-bottom: 1px solid $color-border-medium;
   padding: 16px 24px;
 
   .assistant-info-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: $max-width;
+    max-width: $max-content-width;
     margin: 0 auto;
 
     .assistant-details {
       h2 {
-        font-size: 18px;
-        font-weight: 600;
-        color: $title-color;
+        font-size: $font-xl;
+        font-weight: $font-semibold;
+        color: $color-text-primary;
         margin: 0 0 4px 0;
       }
 

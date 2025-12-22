@@ -1,15 +1,4 @@
-$bg-gradient: linear-gradient(135deg, 
-  rgba(255, 192, 203, 0.1) 0%,
-  rgba(173, 216, 230, 0.1) 25%,
-  rgba(255, 255, 224, 0.1) 50%,
-  rgba(221, 160, 221, 0.1) 75%,
-  rgba(144, 238, 144, 0.1) 100%
-);
-$text-color: #1a1a1a;
-$placeholder-color: #999;
-$action-button-color: #666;
-$button-hover-bg: rgba(0, 0, 0, 0.05);
-$transition-speed: 0.2s;
+@import '../../styles/variables';
 
 .chat-input-form {
   width: 100%;
@@ -17,17 +6,17 @@ $transition-speed: 0.2s;
 
 .chat-input-container {
   position: relative;
-  background: $bg-gradient;
-  border-radius: 24px;
-  padding: 16px 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  background: $gradient-input;
+  border-radius: $radius-round;
+  padding: $spacing-md $spacing-lg;
+  box-shadow: $shadow-input;
   display: flex;
   align-items: flex-end;
-  gap: 12px;
-  transition: box-shadow $transition-speed;
+  gap: $spacing-sm;
+  transition: box-shadow $transition-fast;
 
   &:focus-within {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: $shadow-input-focus;
   }
 }
 
@@ -36,16 +25,16 @@ $transition-speed: 0.2s;
   border: none;
   outline: none;
   background: transparent;
-  font-size: 15px;
-  color: $text-color;
+  font-size: $font-base;
+  color: $color-text-primary;
   resize: none;
   font-family: inherit;
-  line-height: 1.5;
+  line-height: $line-height-base;
   max-height: 200px;
   overflow-y: auto;
 
   &::placeholder {
-    color: $placeholder-color;
+    color: $color-text-tertiary;
   }
 }
 

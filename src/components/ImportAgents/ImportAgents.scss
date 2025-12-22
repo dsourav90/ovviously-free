@@ -1,21 +1,15 @@
-$bg-color: #ffffff;
-$border-color: #e5e5e5;
-$primary-color: #1a1a1a;
-$secondary-color: #666;
-$error-color: #e74c3c;
-$success-color: #2ecc71;
-$hover-bg: #f5f5f5;
+@import '../../styles/variables';
 
 .import-agents {
-  background: $bg-color;
-  border-radius: 16px;
-  padding: 24px;
+  background: $color-bg-white;
+  border-radius: $radius-2xl;
+  padding: $spacing-xl;
   max-width: 600px;
   width: 100%;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: $shadow-xl;
 
   &-header {
     display: flex;
@@ -26,7 +20,7 @@ $hover-bg: #f5f5f5;
     h2 {
       font-size: 24px;
       font-weight: 600;
-      color: $primary-color;
+      color: $color-text-primary;
     }
 
     .close-button {
@@ -40,7 +34,7 @@ $hover-bg: #f5f5f5;
       transition: background-color 0.2s;
 
       &:hover {
-        background-color: $hover-bg;
+        background-color: $color-bg-gray;
       }
     }
   }
@@ -57,7 +51,7 @@ $hover-bg: #f5f5f5;
 
   p {
     font-size: 15px;
-    color: $secondary-color;
+    color: $color-text-secondary;
     margin-bottom: 24px;
   }
 }
@@ -75,18 +69,18 @@ $hover-bg: #f5f5f5;
   display: flex;
   gap: 12px;
   padding: 16px;
-  border: 2px solid $border-color;
+  border: 2px solid $color-border-medium;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background: $hover-bg;
-    border-color: lighten($primary-color, 40%);
+    background: $color-bg-gray;
+    border-color: lighten($color-text-primary, 40%);
   }
 
   &.selected {
-    border-color: $primary-color;
+    border-color: $color-text-primary;
     background: rgba(26, 26, 26, 0.02);
   }
 
@@ -103,13 +97,13 @@ $hover-bg: #f5f5f5;
     h3 {
       font-size: 16px;
       font-weight: 600;
-      color: $primary-color;
+      color: $color-text-primary;
       margin: 0 0 4px 0;
     }
 
     .assistant-model {
       font-size: 12px;
-      color: $secondary-color;
+      color: $color-text-secondary;
       background: rgba(0, 0, 0, 0.05);
       padding: 2px 8px;
       border-radius: 4px;
@@ -119,7 +113,7 @@ $hover-bg: #f5f5f5;
 
     .assistant-description {
       font-size: 13px;
-      color: $secondary-color;
+      color: $color-text-secondary;
       margin: 0;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -135,7 +129,7 @@ $hover-bg: #f5f5f5;
   gap: 12px;
   justify-content: flex-end;
   padding-top: 16px;
-  border-top: 1px solid $border-color;
+  border-top: 1px solid $color-border-medium;
 
   button {
     padding: 10px 24px;
@@ -152,21 +146,21 @@ $hover-bg: #f5f5f5;
     }
 
     &.btn-primary {
-      background-color: $primary-color;
+      background-color: $color-text-primary;
       color: white;
 
       &:hover:not(:disabled) {
-        background-color: lighten($primary-color, 10%);
+        background-color: lighten($color-text-primary, 10%);
       }
     }
 
     &.btn-secondary {
       background-color: transparent;
-      border: 1px solid $border-color;
-      color: $primary-color;
+      border: 1px solid $color-border-medium;
+      color: $color-text-primary;
 
       &:hover {
-        background-color: $hover-bg;
+        background-color: $color-bg-gray;
       }
     }
   }
@@ -175,11 +169,11 @@ $hover-bg: #f5f5f5;
 .error-message {
   margin-top: 16px;
   padding: 12px;
-  background: rgba($error-color, 0.1);
+  background: rgba($color-error, 0.1);
   border-radius: 8px;
   
   p {
-    color: $error-color;
+    color: $color-error;
     font-size: 14px;
     margin: 0;
   }
