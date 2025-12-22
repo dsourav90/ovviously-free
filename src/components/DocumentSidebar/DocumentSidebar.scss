@@ -276,12 +276,7 @@
 // Adjust main content when sidebar is present
 .app-with-sidebar {
   .split-layout {
-    margin-left: 60px;
     transition: margin-left $transition-medium ease;
-  }
-
-  .document-sidebar--open ~ .split-layout {
-    margin-left: 280px;
   }
 }
 
