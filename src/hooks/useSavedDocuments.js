@@ -48,6 +48,9 @@ export const useSavedDocuments = () => {
   // Save document
   const saveDocument = useCallback(async (document) => {
     try {
+      console.log('Saving document:', document);
+      console.log('API URL:', `${apiUrl}?deviceId=${deviceId}`);
+      
       const response = await fetch(`${apiUrl}?deviceId=${deviceId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -60,15 +63,23 @@ export const useSavedDocuments = () => {
         })
       });
 
+      console.log('Response status:', response.status);
+      
       if (response.ok) {
         const newDoc = await response.json();
+        console.log('Saved document:', newDoc);
         setSavedDocuments((prev) => [newDoc, ...prev]);
         return newDoc;
+      } else {
+        const errorText = await response.text();
+        console.error('Failed to save document:', response.status, errorText);
+        throw new Error(`Failed to save: ${response.status}`);
       }
     } catch (error) {
-      console.error('Failed to save document:', error);
+      console.error('Error saving document:', error);
+      throw error;
     }
-  }, [deviceId]);
+  }, [deviceId, apiUrl]);
 
   // Update existing document
   const updateDocument = useCallback(async (id, updates) => {

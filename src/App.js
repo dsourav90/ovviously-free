@@ -43,7 +43,7 @@ function App() {
     const result = await handleFileUpload(file);
     if (result.success && result.documentData) {
       // Auto-save the uploaded document
-      saveDocument(result.documentData);
+      await saveDocument(result.documentData);
     }
     return result;
   };
