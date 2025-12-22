@@ -1,12 +1,13 @@
 import { useChatKit } from '@openai/chatkit-react';
 import { useCallback } from 'react';
+import config from '../config/env';
 
 /**
  * Custom hook for managing ChatKit session
  * @returns {Object} ChatKit control and configuration
  */
 export const useChatKitSession = () => {
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+  const backendUrl = config.backend.url;
 
   // Get or create persistent device ID
   const getDeviceId = useCallback(() => {
@@ -56,7 +57,7 @@ export const useChatKitSession = () => {
     },
     composer: {
       attachments: {
-        enabled: true
+        enabled: config.features.enableAttachments
       }
     }
   });

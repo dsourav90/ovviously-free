@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import config from '../../config/env';
 import './DocumentTextArea.scss';
 
 const DocumentTextArea = ({ value, onChange, placeholder = "Start typing or paste your document here..." }) => {
@@ -8,7 +9,7 @@ const DocumentTextArea = ({ value, onChange, placeholder = "Start typing or past
   return (
     <div className="document-textarea">
       <Editor
-        apiKey="b9igiwd552nrww5fzyiqwumfv4fohtrey249ognkros5hpab"
+        apiKey={config.tinymce.apiKey}
         onInit={(evt, editor) => editorRef.current = editor}
         value={value}
         onEditorChange={onChange}
