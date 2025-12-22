@@ -1,14 +1,14 @@
 const { PrismaClient } = require('@prisma/client');
-const { neonConfig } = require('@neondatabase/serverless');
+const { neonConfig, Pool } = require('@neondatabase/serverless');
 const { PrismaNeon } = require('@prisma/adapter-neon');
-const { Pool } = require('@neondatabase/serverless');
 
 // Configure Neon for serverless environment
 neonConfig.fetchConnectionCache = true;
 
 // WebSocket is required for Neon serverless in some environments
 if (typeof WebSocket === 'undefined') {
-  neonConfig.webSocketConstructor = require('ws');
+  const ws = require('ws');
+  neonConfig.webSocketConstructor = ws;
 }
 
 // Lazy initialization of Prisma
@@ -25,26 +25,30 @@ function getPrismaClient() {
   }
 
   console.log('Initializing Prisma with DATABASE_URL');
-  console.log('Connection string prefix:', databaseUrl.substring(0, 15));
-  console.log('Connection string length:', databaseUrl.length);
 
-  // Create connection pool with Neon - ensure connectionString is properly set
-  const poolConfig = { 
-    connectionString: databaseUrl
-  };
-  
-  console.log('Creating pool with config:', JSON.stringify({ hasConnectionString: !!poolConfig.connectionString }));
-  
-  const pool = new Pool(poolConfig);
-  const adapter = new PrismaNeon(pool);
+  try {
+    // Create connection pool with Neon
+    const pool = new Pool({ connectionString: databaseUrl });
+    
+    console.log('Pool created successfully');
+    
+    const adapter = new PrismaNeon(pool);
+    
+    console.log('Adapter created successfully');
 
-  // Initialize Prisma Client with just the adapter
-  // The adapter handles the connection string
-  prisma = new PrismaClient({ adapter });
-  
-  console.log('Prisma client initialized');
-  
-  return prisma;
+    // Initialize Prisma Client with adapter
+    prisma = new PrismaClient({ 
+      adapter,
+      log: ['query', 'error', 'warn']
+    });
+    
+    console.log('Prisma client initialized successfully');
+    
+    return prisma;
+  } catch (error) {
+    console.error('Error initializing Prisma:', error);
+    throw error;
+  }
 }
 
 exports.handler = async (event, context) => {
