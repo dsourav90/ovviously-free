@@ -6,8 +6,18 @@ const { Pool } = require('@neondatabase/serverless');
 // Configure Neon for serverless
 neonConfig.fetchConnectionCache = true;
 
+// Get database URL from environment
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  console.error('DATABASE_URL environment variable is not set');
+  throw new Error('DATABASE_URL environment variable is required');
+}
+
+console.log('Database URL configured:', databaseUrl ? 'Yes' : 'No');
+
 // Create connection pool
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ connectionString: databaseUrl });
 const adapter = new PrismaNeon(pool);
 
 // Initialize Prisma Client with Neon adapter
