@@ -8,7 +8,6 @@ const ChatPanel = ({ control, title = "AI Legal Assistant", documentContext }) =
     isReady, 
     embeddingsReady, 
     loadingStatus, 
-    buildSystemMessage, 
     stats 
   } = useLegalAssistant(documentContext);
 

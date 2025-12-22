@@ -67,7 +67,7 @@ export function useLegalAssistant(documentContext = {}) {
       console.error('Error getting semantic context:', err);
       return getDocumentContext(); // Fallback
     }
-  }, [isReady, embeddingsReady]);
+  }, [isReady, embeddingsReady, getDocumentContext]);
 
   /**
    * Get relevant context for the current document (static filtering - legacy)

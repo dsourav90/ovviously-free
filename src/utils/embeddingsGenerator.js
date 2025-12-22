@@ -228,7 +228,7 @@ export function loadCachedEmbeddings(version = '2.0') {
   }
 }
 
-export default {
+const embeddingsGenerator = {
   generateEmbedding,
   generateEmbeddingsBatch,
   generateRuleEmbeddings,
@@ -239,3 +239,5 @@ export default {
   EMBEDDING_MODEL,
   EMBEDDING_DIMENSIONS
 };
+
+export default embeddingsGenerator;
