@@ -14,6 +14,18 @@
   overflow: hidden;
 }
 
+.app-center-chat {
+  align-items: center;
+  justify-content: center;
+  
+  .chat-panel {
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+  }
+}
+
 /* Iframe mode - full screen */
 body.iframe-mode {
   margin: 0;

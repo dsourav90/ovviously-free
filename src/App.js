@@ -94,8 +94,8 @@ function App() {
   };
 
   return (
-    <div className={`app ${isSidebarOpen ? 'app-with-sidebar' : ''}`}>
-      <DocumentSidebar
+    <div className="app app-center-chat">
+      {/* <DocumentSidebar
         savedDocuments={savedDocuments}
         onSelectDocument={handleSelectDocument}
         onNewChat={handleNewChat}
@@ -104,8 +104,8 @@ function App() {
         onCopyDocument={handleCopyDocument}
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         isOpen={isSidebarOpen}
-      />
-      <SplitLayout
+      /> */}
+      {/* <SplitLayout
         leftWidth={60}
         leftPanel={
           <DocumentEditor
@@ -126,7 +126,8 @@ function App() {
         rightPanel={
           <ChatPanel control={control} documentContext={documentContext} />
         }
-      />
+      /> */}
+      <ChatPanel control={control} documentContext={documentContext} />
     </div>
   );
 }
