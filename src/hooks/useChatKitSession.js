@@ -65,7 +65,7 @@ export const useChatKitSession = () => {
     }
   }, [backendUrl, getDeviceId]);
 
-  const { control } = useChatKit({
+  const chatKit = useChatKit({
     api: {
       getClientSecret: fetchClientSecret
     },
@@ -76,5 +76,11 @@ export const useChatKitSession = () => {
     }
   });
 
-  return { control };
+  return { 
+    control: chatKit.control,
+    showHistory: chatKit.showHistory,
+    hideHistory: chatKit.hideHistory,
+    setThreadId: chatKit.setThreadId,
+    sendUserMessage: chatKit.sendUserMessage
+  };
 };
