@@ -1,6 +1,3 @@
-const { buildLegalSystemInstructions } = require('./utils/legalContext');
-const { buildSemanticInstructions } = require('./utils/legalSemanticSearch');
-
 exports.handler = async (event, context) => {
   // Enable CORS
   const headers = {
@@ -42,12 +39,13 @@ exports.handler = async (event, context) => {
       };
     }
 
-    const { deviceId, contractType, query, useSemanticSearch = false } = requestBody;
+    const { deviceId } = requestBody;
     
-    console.log('📥 ChatKit session request:', { deviceId, contractType, useSemanticSearch });
+    console.log('📥 ChatKit session request:', { deviceId });
 
     const workflowId = process.env.REACT_APP_CHATKIT_WORKFLOW_ID;
     const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+    const enableAttachments = process.env.REACT_APP_ENABLE_ATTACHMENTS === 'true';
 
     if (!workflowId || !apiKey) {
       console.error('❌ Missing environment variables');
@@ -59,22 +57,6 @@ exports.handler = async (event, context) => {
         })
       };
     }
-
-    let systemInstructions;
-
-    // Use semantic search if query is provided and enabled
-    if (useSemanticSearch && query) {
-      console.log('🔍 Using semantic search for query:', query.substring(0, 50));
-      systemInstructions = await buildSemanticInstructions(query, 5);
-    } else {
-      // Fallback to static filtering by contract type
-      console.log('📋 Using static context for contract type:', contractType);
-      systemInstructions = buildLegalSystemInstructions(contractType);
-    }
-
-    // Note: ChatKit sessions don't accept instructions parameter
-    // Legal context should be provided through the workflow or in messages
-    // For now, we'll create a basic session and handle context in the workflow
 
     // Create ChatKit session
     const response = await fetch('https://api.openai.com/v1/chatkit/sessions', {
@@ -89,7 +71,7 @@ exports.handler = async (event, context) => {
         user: deviceId || `user-${Date.now()}`,
         chatkit_configuration: {
           file_upload: {
-            enabled: true
+            enabled: enableAttachments
           }
         }
       }),
