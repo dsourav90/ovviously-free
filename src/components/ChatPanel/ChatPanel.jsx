@@ -3,7 +3,7 @@ import { ChatKit } from '@openai/chatkit-react';
 import { useLegalAssistant } from '../../hooks/useLegalAssistant';
 import './ChatPanel.scss';
 
-const ChatPanel = ({ control, title = "AI Legal Assistant", documentContext }) => {
+const ChatPanel = ({ control, title = "AI Legal", documentContext }) => {
   const { 
     isReady, 
     embeddingsReady, 
