@@ -42,6 +42,8 @@ export const useChatKitSession = () => {
       
       for (const url of endpoints) {
         try {
+          console.log('🔄 Trying endpoint:', url, 'with method: POST');
+          
           response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -55,6 +57,8 @@ export const useChatKitSession = () => {
             })
           });
           
+          console.log('📨 Response received:', { url, status: response.status, statusText: response.statusText });
+          
           if (response.ok) {
             console.log('✅ Connected to:', url);
             break;
@@ -64,6 +68,14 @@ export const useChatKitSession = () => {
           if (response.status === 404) {
             console.log('⏭️ Endpoint not found, trying next:', url);
             continue;
+          }
+          
+          // If 405, log the allowed methods
+          if (response.status === 405) {
+            const allowedMethods = response.headers.get('Allow') || response.headers.get('Access-Control-Allow-Methods');
+            console.error('❌ Method not allowed. Allowed methods:', allowedMethods);
+            console.log('⏭️ Trying next endpoint:', url);
+            continue; // Try the next endpoint instead of throwing
           }
           
           // For other errors, throw immediately
