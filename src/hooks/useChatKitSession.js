@@ -71,7 +71,7 @@ export const useChatKitSession = () => {
     },
     composer: {
       attachments: {
-        enabled: false
+        enabled: true
       }
     },
     header: {
