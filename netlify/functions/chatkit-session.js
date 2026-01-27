@@ -7,6 +7,13 @@ exports.handler = async (event, context) => {
     'Content-Type': 'application/json'
   };
 
+  // Log incoming request details
+  console.log('📥 Incoming request:', {
+    method: event.httpMethod,
+    path: event.path,
+    headers: event.headers
+  });
+
   // Handle preflight requests
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -18,10 +25,15 @@ exports.handler = async (event, context) => {
 
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
+    console.error('❌ Method not allowed:', event.httpMethod);
     return {
       statusCode: 405,
       headers,
-      body: JSON.stringify({ error: 'Method not allowed' })
+      body: JSON.stringify({ 
+        error: 'Method not allowed',
+        received: event.httpMethod,
+        expected: 'POST'
+      })
     };
   }
 

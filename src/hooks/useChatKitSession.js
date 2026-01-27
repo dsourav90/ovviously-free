@@ -29,31 +29,58 @@ export const useChatKitSession = () => {
     }
     
     try {
-      // Use Netlify function URL
-      const url = backendUrl 
-        ? `${backendUrl}/api/chatkit/session`
-        : '/.netlify/functions/chatkit-session';
-      
       const deviceId = getDeviceId();
       console.log('📡 Requesting ChatKit session for device:', deviceId);
       
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          deviceId,
-          contractType: null,
-          query: null,
-          useSemanticSearch: false
-        })
-      });
+      // Try multiple endpoints for Vercel/Netlify compatibility
+      const endpoints = backendUrl 
+        ? [`${backendUrl}/api/chatkit-session`]
+        : ['/api/chatkit-session', '/.netlify/functions/chatkit-session'];
+      
+      let response;
+      let lastError;
+      
+      for (const url of endpoints) {
+        try {
+          response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              deviceId,
+              contractType: null,
+              query: null,
+              useSemanticSearch: false
+            })
+          });
+          
+          if (response.ok) {
+            console.log('✅ Connected to:', url);
+            break;
+          }
+          
+          // If 404, try next endpoint
+          if (response.status === 404) {
+            console.log('⏭️ Endpoint not found, trying next:', url);
+            continue;
+          }
+          
+          // For other errors, throw immediately
+          const errorText = await response.text();
+          console.error('❌ ChatKit session error:', response.status, errorText);
+          throw new Error(`HTTP error! status: ${response.status}, details: ${errorText}`);
+        } catch (error) {
+          lastError = error;
+          if (error.message.includes('HTTP error')) {
+            throw error;
+          }
+          console.log('⏭️ Failed to reach:', url, error.message);
+        }
+      }
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('❌ ChatKit session error:', response.status, errorText);
-        throw new Error(`HTTP error! status: ${response.status}, details: ${errorText}`);
+      if (!response || !response.ok) {
+        throw lastError || new Error('Failed to connect to any backend endpoint');
       }
 
       const data = await response.json();
