@@ -32,10 +32,10 @@ export const useChatKitSession = () => {
       const deviceId = getDeviceId();
       console.log('📡 Requesting ChatKit session for device:', deviceId);
       
-      // Try multiple endpoints for Vercel/Netlify compatibility
+      // Try multiple endpoints for Vercel/Netlify compatibility (Vercel first)
       const endpoints = backendUrl 
         ? [`${backendUrl}/api/chatkit-session`]
-        : ['/api/chatkit-session', '/.netlify/functions/chatkit-session'];
+        : ['/api/chatkit-session'];
       
       let response;
       let lastError;

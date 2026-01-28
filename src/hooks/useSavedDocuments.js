@@ -22,7 +22,7 @@ export const useSavedDocuments = () => {
   }, []);
 
   const deviceId = getDeviceId();
-  const apiUrl = '/.netlify/functions/documents';
+  const apiUrl = '/api/documents';
 
   // Load documents from database
   const loadDocuments = useCallback(async () => {
